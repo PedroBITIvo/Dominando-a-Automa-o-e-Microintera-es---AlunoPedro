@@ -297,9 +297,13 @@ export function RegistrationForm() {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date < EVENT_DATE_START || date > EVENT_DATE_END
-                    }
+                    defaultMonth={EVENT_DATE_START}
+                    disabled={(date) => {
+                      const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                      const startOnly = new Date(EVENT_DATE_START.getFullYear(), EVENT_DATE_START.getMonth(), EVENT_DATE_START.getDate());
+                      const endOnly = new Date(EVENT_DATE_END.getFullYear(), EVENT_DATE_END.getMonth(), EVENT_DATE_END.getDate());
+                      return dateOnly < startOnly || dateOnly > endOnly;
+                    }}
                     initialFocus
                     className={cn("p-3 pointer-events-auto")}
                   />
